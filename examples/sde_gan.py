@@ -266,7 +266,7 @@ def plot(ts, generator, dataloader, num_plot_samples, plot_locs):
     generated_samples = generated_samples[..., 1]
 
     # Plot histograms
-    for prop in plot_locs:
+    for i, prop in enumerate(plot_locs):
         time = int(prop * (real_samples.size(1) - 1))
         real_samples_time = real_samples[:, time]
         generated_samples_time = generated_samples[:, time]
@@ -281,7 +281,8 @@ def plot(ts, generator, dataloader, num_plot_samples, plot_locs):
         plt.ylabel('Density')
         plt.title(f'Marginal distribution at time {time}.')
         plt.tight_layout()
-        plt.show()
+        # plt.show()
+        plt.savefig(f'output/hist_{i}.png')
 
     real_samples = real_samples[:num_plot_samples]
     generated_samples = generated_samples[:num_plot_samples]
@@ -300,7 +301,8 @@ def plot(ts, generator, dataloader, num_plot_samples, plot_locs):
     plt.legend()
     plt.title(f"{num_plot_samples} samples from both real and generated distributions.")
     plt.tight_layout()
-    plt.show()
+    # plt.show()
+    plt.savefig('output/samples.png')
 
 
 ###################
@@ -422,13 +424,16 @@ def main(
 
         if (step % steps_per_print) == 0 or step == steps - 1:
             total_unaveraged_loss = evaluate_loss(ts, batch_size, train_dataloader, generator, discriminator)
+            out_string = f"Step: {step:3} Loss (unaveraged): {total_unaveraged_loss:.4f}"
             if step > swa_step_start:
                 total_averaged_loss = evaluate_loss(ts, batch_size, train_dataloader, averaged_generator.module,
                                                     averaged_discriminator.module)
-                trange.write(f"Step: {step:3} Loss (unaveraged): {total_unaveraged_loss:.4f} "
-                             f"Loss (averaged): {total_averaged_loss:.4f}")
+                out_string = f"Step: {step:3} Loss (unaveraged): {total_unaveraged_loss:.4f}\tLoss (averaged): {total_averaged_loss:.4f}"
+                trange.write(out_string)
             else:
-                trange.write(f"Step: {step:3} Loss (unaveraged): {total_unaveraged_loss:.4f}")
+                trange.write(out_string)
+            with open('output/loss.txt', 'a') as f:
+                f.write(out_string + '\n')
     generator.load_state_dict(averaged_generator.module.state_dict())
     discriminator.load_state_dict(averaged_discriminator.module.state_dict())
 
