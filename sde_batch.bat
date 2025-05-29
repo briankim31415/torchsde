@@ -11,4 +11,4 @@
 
 module load gcc cuda/12.6 python3
 source ./sde_test/bin/activate
-python brian_testing/sde_gan_configs
+python brian_testing/inf-gan_testing.py
