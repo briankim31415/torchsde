@@ -13,3 +13,5 @@ CMakeLists.txt
 restats
 *-darwin.so
 **.pyc
+brian_testing/configs_copy.csv
+brian_testing/sde_gan_configs_test.py
