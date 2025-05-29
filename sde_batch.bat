@@ -10,5 +10,5 @@
 #SBATCH -A CCR25007
 
 module load gcc cuda/12.6 python3
-source ./venv/bin/activate
+source ./sde_test/bin/activate
 python brian_testing/sde_gan_configs
