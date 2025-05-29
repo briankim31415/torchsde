@@ -391,6 +391,7 @@ def main(
 
     # Train both generator and discriminator.
     trange = tqdm.tqdm(range(steps))
+    loss_results = []
     for step in trange:
         real_samples, = next(infinite_train_dataloader)
 
@@ -432,8 +433,13 @@ def main(
                 trange.write(out_string)
             else:
                 trange.write(out_string)
-            with open('output/loss.txt', 'a') as f:
-                f.write(out_string + '\n')
+                
+            loss_results.append(out_string)
+    
+    with open('output/loss_results.txt', 'w') as f:
+        for loss_result in loss_results:
+            f.write(loss_result + '\n')
+    
     generator.load_state_dict(averaged_generator.module.state_dict())
     discriminator.load_state_dict(averaged_discriminator.module.state_dict())
 

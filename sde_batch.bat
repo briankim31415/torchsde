@@ -11,6 +11,6 @@
 #SBATCH --mail-user=briankim31415@gmail.com
 #SBATCH -A CCR25007
 
-module load gcc cuda/12.6 python3
+module load gcc cuda python3
 source ./sde_test/bin/activate
-python brian_testing/inf-gan_testing.py
+python3 examples/sde_gan.py
