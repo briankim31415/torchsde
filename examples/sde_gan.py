@@ -282,7 +282,7 @@ def plot(ts, generator, dataloader, num_plot_samples, plot_locs):
         plt.title(f'Marginal distribution at time {time}.')
         plt.tight_layout()
         # plt.show()
-        plt.savefig(f'output/hist_{i}.png')
+        plt.savefig(f'brian_testing/output/hist_{i}.png')
 
     real_samples = real_samples[:num_plot_samples]
     generated_samples = generated_samples[:num_plot_samples]
@@ -302,7 +302,7 @@ def plot(ts, generator, dataloader, num_plot_samples, plot_locs):
     plt.title(f"{num_plot_samples} samples from both real and generated distributions.")
     plt.tight_layout()
     # plt.show()
-    plt.savefig('output/samples.png')
+    plt.savefig('brian_testing/output/samples.png')
 
 
 ###################
@@ -436,7 +436,7 @@ def main(
                 
             loss_results.append(out_string)
     
-    with open('output/loss_results.txt', 'w') as f:
+    with open('brian_testing/output/loss_results.txt', 'w') as f:
         for loss_result in loss_results:
             f.write(loss_result + '\n')
     
